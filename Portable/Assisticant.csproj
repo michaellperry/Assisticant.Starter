@@ -51,6 +51,7 @@
     <Compile Include="Fields\Computed.cs" />
     <Compile Include="Fields\Observable.cs" />
     <Compile Include="Binding\BindingSubscriptions.cs" />
+    <Compile Include="Binding\IInputSubscription.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
