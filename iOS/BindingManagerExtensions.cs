@@ -33,6 +33,33 @@ namespace Assisticant.Binding
 			}
 		}
 
+		public class ButtonClickSubscription : IInputSubscription
+		{
+			private UIButton _control;
+			private Action _action;
+
+			public ButtonClickSubscription(UIButton control, Action action)
+			{
+				_control = control;
+				_action = action;
+			}
+
+			public void Subscribe()
+			{
+				_control.TouchUpInside += ButtonTouchUpInside;
+			}
+
+			public void Unsubscribe()
+			{
+				_control.TouchUpInside -= ButtonTouchUpInside;
+			}
+
+			private void ButtonTouchUpInside(object sender, EventArgs e)
+			{
+				_action ();
+			}
+		}
+
 		public static void Initialize (this BindingManager bindings, UIViewController controller)
 		{
 			UpdateScheduler.Initialize (a =>
@@ -47,6 +74,11 @@ namespace Assisticant.Binding
 		public static void BindText(this BindingManager bindings, UILabel control, Func<string> output)
 		{
 			bindings.Bind (output, s => control.Text = s);
+		}
+
+		public static void BindCommand(this BindingManager bindings, UIButton control, Action action)
+		{
+			bindings.Bind (new ButtonClickSubscription (control, action));
 		}
 	}
 }

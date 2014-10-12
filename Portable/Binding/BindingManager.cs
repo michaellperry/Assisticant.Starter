@@ -26,6 +26,15 @@ namespace Assisticant.Binding
 			});
 		}
 
+		public void Bind(IInputSubscription input)
+		{
+			input.Subscribe ();
+			_subscriptions.Add (new SubscriptionPair
+			{
+				Input = input
+			});
+		}
+
 		public void Bind<T>(Func<T> function, Action<T> action, IInputSubscription input)
 		{
 			input.Subscribe ();
@@ -39,7 +48,8 @@ namespace Assisticant.Binding
 		public void Unbind()
 		{
 			foreach (var subscription in _subscriptions) {
-				subscription.Output.Unsubscribe ();
+				if (subscription.Output != null)
+					subscription.Output.Unsubscribe ();
 				if (subscription.Input != null)
 					subscription.Input.Unsubscribe ();
 			}
