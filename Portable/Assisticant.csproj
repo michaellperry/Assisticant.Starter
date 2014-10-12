@@ -52,6 +52,7 @@
     <Compile Include="Fields\Observable.cs" />
     <Compile Include="Binding\IInputSubscription.cs" />
     <Compile Include="Binding\BindingManager.cs" />
+    <Compile Include="Binding\IValueConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
