@@ -41,7 +41,6 @@
     <Compile Include="Precedent.cs" />
     <Compile Include="RecycleBin.cs" />
     <Compile Include="UpdateScheduler.cs" />
-    <Compile Include="ViewModelBase.cs" />
     <Compile Include="WeakArray.cs" />
     <Compile Include="WeakHashSet.cs" />
     <Compile Include="Collections\ComputedDictionary.cs" />
@@ -52,6 +51,10 @@
     <Compile Include="Fields\ComputedSubscription.cs" />
     <Compile Include="Fields\Computed.cs" />
     <Compile Include="Fields\Observable.cs" />
+    <Compile Include="Binding\BindingSubscriptions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Binding\" />
+  </ItemGroup>
 </Project>

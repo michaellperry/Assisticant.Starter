@@ -16,15 +16,11 @@ namespace Assisticant.Collections
 {
     public class ComputedList<T> : IEnumerable<T>
     {
-        private readonly Func<IEnumerable<T>> _computeCollection;
-
         private List<T> _list = new List<T>();
         private Computed _computedSentry;
 
         public ComputedList(Func<IEnumerable<T>> computeCollection)
         {
-            _computeCollection = computeCollection;
-
             _computedSentry = new Computed(
 				delegate {
 	                using (var bin = new RecycleBin<T>(_list))
