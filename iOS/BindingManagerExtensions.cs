@@ -80,6 +80,11 @@ namespace Assisticant.Binding
 		{
 			bindings.Bind (new ButtonClickSubscription (control, action));
 		}
+
+		public static void BindCommand(this BindingManager bindings, UIButton control, Action action, Func<bool> condition)
+		{
+			bindings.Bind (condition, b => control.Enabled = b, new ButtonClickSubscription (control, action));
+		}
 	}
 }
 
