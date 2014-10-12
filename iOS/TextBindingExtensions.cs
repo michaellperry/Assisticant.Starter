@@ -5,9 +5,12 @@ using System.Collections.Generic;
 
 namespace Assisticant.Binding
 {
+	/// <summary>
+	/// Text binding extensions.
+	/// </summary>
 	public static class TextBindingExtensions
 	{
-		public class TextBinding<TData> : IInputSubscription
+		class TextBinding<TData> : IInputSubscription
 		{
 			private UITextField _control;
 			private Action<TData> _input;
@@ -36,7 +39,7 @@ namespace Assisticant.Binding
 			}
 		}
 
-		public class Identity : IValueConverter<string, string>
+		class Identity : IValueConverter<string, string>
 		{
 			public static Identity Instance = new Identity();
 
@@ -51,7 +54,7 @@ namespace Assisticant.Binding
 			}
 		}
 
-		public class ConvertInt : IValueConverter<string, int>
+		class ConvertInt : IValueConverter<string, int>
 		{
 			public static ConvertInt Instance = new ConvertInt();
 
@@ -70,31 +73,74 @@ namespace Assisticant.Binding
 			}
 		}
 
+		/// <summary>
+		/// Bind the Text of a UITextField to a property using a value converter.
+		/// </summary>
+		/// <param name="bindings">The binding manager.</param>
+		/// <param name="control">The text field.</param>
+		/// <param name="output">A function that gets the property.</param>
+		/// <param name="input">A function that sets the property.</param>
+		/// <param name="converter">A custom value converter to string.</param>
+		/// <typeparam name="TData">The type of the property.</typeparam>
 		public static void BindText<TData>(this BindingManager bindings, UITextField control, Func<TData> output, Action<TData> input, IValueConverter<string, TData> converter)
 		{
 			bindings.Bind (output, s => control.Text = converter.ConvertOutput(s), new TextBinding<TData>(control, input, converter));
 		}
 
+		/// <summary>
+		/// Bind the Text of a UILabel to a read-only property using a value converter.
+		/// </summary>
+		/// <param name="bindings">The binding manager.</param>
+		/// <param name="control">The label.</param>
+		/// <param name="output">A function that gets the property.</param>
+		/// <param name="converter">A custom value converter to string.</param>
+		/// <typeparam name="TData">The type of the property.</typeparam>
 		public static void BindText<TData>(this BindingManager bindings, UILabel control, Func<TData> output, IValueConverter<string, TData> converter)
 		{
 			bindings.Bind (output, s => control.Text = converter.ConvertOutput(s));
 		}
 
+		/// <summary>
+		/// Bind the Text of a UITextField to a string property.
+		/// </summary>
+		/// <param name="bindings">The binding manager.</param>
+		/// <param name="control">The text field.</param>
+		/// <param name="output">A function that gets the property.</param>
+		/// <param name="input">A function that sets the property.</param>
 		public static void BindText(this BindingManager bindings, UITextField control, Func<string> output, Action<string> input)
 		{
 			BindText (bindings, control, output, input, Identity.Instance);
 		}
 
+		/// <summary>
+		/// Bind the Text of a UILabel to a read-only string property.
+		/// </summary>
+		/// <param name="bindings">The binding manager.</param>
+		/// <param name="control">The label.</param>
+		/// <param name="output">A function that gets the property.</param>
 		public static void BindText(this BindingManager bindings, UILabel control, Func<string> output)
 		{
 			BindText (bindings, control, output, Identity.Instance);
 		}
 
+		/// <summary>
+		/// Bind the Text of a UITextField to an int property.
+		/// </summary>
+		/// <param name="bindings">The binding manager.</param>
+		/// <param name="control">The text field.</param>
+		/// <param name="output">A function that gets the property.</param>
+		/// <param name="input">A function that sets the property.</param>
 		public static void BindText(this BindingManager bindings, UITextField control, Func<int> output, Action<int> input)
 		{
 			BindText (bindings, control, output, input, ConvertInt.Instance);
 		}
 
+		/// <summary>
+		/// Bind the Text of a UILabel to a read-only int property.
+		/// </summary>
+		/// <param name="bindings">The binding manager.</param>
+		/// <param name="control">The label.</param>
+		/// <param name="output">A function that gets the property.</param>
 		public static void BindText(this BindingManager bindings, UILabel control, Func<int> output)
 		{
 			BindText (bindings, control, output, ConvertInt.Instance);

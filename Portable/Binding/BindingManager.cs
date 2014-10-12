@@ -4,6 +4,10 @@ using Assisticant.Fields;
 
 namespace Assisticant.Binding
 {
+	/// <summary>
+	/// Manages all data bindings for a view. Be sure to Initialize on load, Bind properties when
+	/// the view is displayed, and Unbind when the view dissapears.
+	/// </summary>
 	public class BindingManager
 	{
 		struct SubscriptionPair
@@ -14,10 +18,19 @@ namespace Assisticant.Binding
 
 		private List<SubscriptionPair> _subscriptions = new List<SubscriptionPair>();
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Assisticant.Binding.BindingManager"/> class.
+		/// </summary>
 		public BindingManager()
 		{
 		}
 
+		/// <summary>
+		/// Bind the results of a function to an action.
+		/// </summary>
+		/// <param name="function">The function that computes a value to output.</param>
+		/// <param name="action">The action to perform when new output is computed.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
 		public void Bind<T>(Func<T> function, Action<T> action)
 		{
 			_subscriptions.Add (new SubscriptionPair
@@ -26,6 +39,10 @@ namespace Assisticant.Binding
 			});
 		}
 
+		/// <summary>
+		/// Bind a custom input subscription.
+		/// </summary>
+		/// <param name="input">The custom input subscription.</param>
 		public void Bind(IInputSubscription input)
 		{
 			input.Subscribe ();
@@ -35,6 +52,13 @@ namespace Assisticant.Binding
 			});
 		}
 
+		/// <summary>
+		/// Bind the results of a function to an action, and a custom input subscription.
+		/// </summary>
+		/// <param name="function">The function that computes a value to output.</param>
+		/// <param name="action">The action to perform when new output is computed.</param>
+		/// <param name="input">The custom input subscription.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
 		public void Bind<T>(Func<T> function, Action<T> action, IInputSubscription input)
 		{
 			input.Subscribe ();
@@ -45,6 +69,9 @@ namespace Assisticant.Binding
 			});
 		}
 
+		/// <summary>
+		/// Unbind all bindings. Call this method when the view disappers.
+		/// </summary>
 		public void Unbind()
 		{
 			foreach (var subscription in _subscriptions) {

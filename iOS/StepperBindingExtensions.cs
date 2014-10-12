@@ -4,9 +4,12 @@ using MonoTouch.UIKit;
 
 namespace Assisticant.Binding
 {
+	/// <summary>
+	/// Stepper binding extensions.
+	/// </summary>
 	public static class StepperBindingExtensions
 	{
-		public class ValueBinding<TData> : IInputSubscription
+		class ValueBinding<TData> : IInputSubscription
 		{
 			private UIStepper _control;
 			private Action<TData> _input;
@@ -35,7 +38,7 @@ namespace Assisticant.Binding
 			}
 		}
 
-		public class Identity : IValueConverter<double, double>
+		class Identity : IValueConverter<double, double>
 		{
 			public static Identity Instance = new Identity();
 
@@ -50,7 +53,7 @@ namespace Assisticant.Binding
 			}
 		}
 
-		public class ConvertInt : IValueConverter<double, int>
+		class ConvertInt : IValueConverter<double, int>
 		{
 			public static ConvertInt Instance = new ConvertInt();
 
@@ -65,16 +68,39 @@ namespace Assisticant.Binding
 			}
 		}
 
+		/// <summary>
+		/// Bind the Value property of a UIStepper to a property using a value converter.
+		/// </summary>
+		/// <param name="bindings">The binding manager.</param>
+		/// <param name="control">The stepper.</param>
+		/// <param name="output">A function that gets the property.</param>
+		/// <param name="input">An action sets the property.</param>
+		/// <param name="converter">A custom value converter to type double.</param>
+		/// <typeparam name="TData">The type of property to which the value is bound.</typeparam>
 		public static void BindValue<TData>(this BindingManager bindings, UIStepper control, Func<TData> output, Action<TData> input, IValueConverter<double, TData> converter)
 		{
 			bindings.Bind (output, s => control.Value = converter.ConvertOutput(s), new ValueBinding<TData>(control, input, converter));
 		}
 
+		/// <summary>
+		/// Bind the Value property of a UIStepper to a double property.
+		/// </summary>
+		/// <param name="bindings">The binding manager.</param>
+		/// <param name="control">The stepper.</param>
+		/// <param name="output">A function that gets the property.</param>
+		/// <param name="input">An action sets the property.</param>
 		public static void BindValue(this BindingManager bindings, UIStepper control, Func<double> output, Action<double> input)
 		{
 			BindValue (bindings, control, output, input, Identity.Instance);
 		}
 
+		/// <summary>
+		/// Bind the Value property of a UIStepper to an integer property.
+		/// </summary>
+		/// <param name="bindings">The binding manager.</param>
+		/// <param name="control">The stepper.</param>
+		/// <param name="output">A function that gets the property.</param>
+		/// <param name="input">An action sets the property.</param>
 		public static void BindValue(this BindingManager bindings, UIStepper control, Func<int> output, Action<int> input)
 		{
 			BindValue (bindings, control, output, input, ConvertInt.Instance);
