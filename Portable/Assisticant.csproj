@@ -34,7 +34,6 @@
     <Compile Include="AssisticantExtensions.cs" />
     <Compile Include="Computed.cs" />
     <Compile Include="ComputedJob.cs" />
-    <Compile Include="InertialProperty.cs" />
     <Compile Include="IUpdatable.cs" />
     <Compile Include="MakeCommand.cs" />
     <Compile Include="Observable.cs" />
