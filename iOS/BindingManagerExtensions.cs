@@ -4,7 +4,7 @@ using MonoTouch.UIKit;
 
 namespace Assisticant.Binding
 {
-	public static class BindingSubscriptionsExtensions
+	public static class BindingManagerExtensions
 	{
 		public class TextBinding : IInputSubscription
 		{
@@ -33,13 +33,18 @@ namespace Assisticant.Binding
 			}
 		}
 
-		public static void BindText(this BindingSubscriptions bindings, UITextField control, Func<string> output, Action<string> input)
+		public static void Initialize (this BindingManager bindings, UIViewController controller)
 		{
-			bindings.Bind (output, s => control.Text = s);
-			new TextBinding (control, input).Subscribe ();
+			UpdateScheduler.Initialize (a =>
+				controller.BeginInvokeOnMainThread (new NSAction(a)));
 		}
 
-		public static void BindText(this BindingSubscriptions bindings, UILabel control, Func<string> output)
+		public static void BindText(this BindingManager bindings, UITextField control, Func<string> output, Action<string> input)
+		{
+			bindings.Bind (output, s => control.Text = s, new TextBinding(control, input));
+		}
+
+		public static void BindText(this BindingManager bindings, UILabel control, Func<string> output)
 		{
 			bindings.Bind (output, s => control.Text = s);
 		}

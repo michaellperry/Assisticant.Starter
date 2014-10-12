@@ -4,7 +4,7 @@ using Assisticant.Fields;
 
 namespace Assisticant.Binding
 {
-	public class BindingSubscriptions
+	public class BindingManager
 	{
 		struct SubscriptionPair
 		{
@@ -13,6 +13,10 @@ namespace Assisticant.Binding
 		}
 
 		private List<SubscriptionPair> _subscriptions = new List<SubscriptionPair>();
+
+		public BindingManager()
+		{
+		}
 
 		public void Bind<T>(Func<T> function, Action<T> action)
 		{
@@ -32,7 +36,7 @@ namespace Assisticant.Binding
 			});
 		}
 
-		public void Unsubscribe()
+		public void Unbind()
 		{
 			foreach (var subscription in _subscriptions) {
 				subscription.Output.Unsubscribe ();
