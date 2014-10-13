@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Android.Widget;
+using Android.Views;
 
 namespace Assisticant.Binding
 {
@@ -12,12 +13,14 @@ namespace Assisticant.Binding
 		class TextBinding<TData> : IInputSubscription
 		{
 			private TextView _control;
+            private Func<TData> _output;
 			private Action<TData> _input;
 			private IValueConverter<string, TData> _converter;
 
-			public TextBinding(TextView control, Action<TData> input, IValueConverter<string, TData> converter)
+			public TextBinding(TextView control, Func<TData> output, Action<TData> input, IValueConverter<string, TData> converter)
 			{
 				_control = control;
+                _output = output;
 				_input = input;
 				_converter = converter;
 			}
@@ -25,17 +28,24 @@ namespace Assisticant.Binding
 			public void Subscribe()
 			{
 				_control.TextChanged += TextViewTextChanged;
+                _control.FocusChange += TextViewFocusChanged;
 			}
 
 			public void Unsubscribe()
 			{
                 _control.TextChanged -= TextViewTextChanged;
-			}
+                _control.FocusChange -= TextViewFocusChanged;
+            }
 
 			private void TextViewTextChanged (object sender, EventArgs e)
 			{
 				_input(_converter.ConvertInput(_control.Text));
 			}
+
+            private void TextViewFocusChanged(object sender, View.FocusChangeEventArgs e)
+            {
+                _control.Text = _converter.ConvertOutput(_output());
+            }
 		}
 
 		class Identity : IValueConverter<string, string>
@@ -81,10 +91,13 @@ namespace Assisticant.Binding
 		/// <param name="input">A function that sets the property.</param>
 		/// <param name="converter">A custom value converter to string.</param>
 		/// <typeparam name="TData">The type of the property.</typeparam>
-		public static void BindText<TData>(this BindingManager bindings, TextView control, Func<TData> output, Action<TData> input, IValueConverter<string, TData> converter)
-		{
-			bindings.Bind (output, s => control.Text = converter.ConvertOutput(s), new TextBinding<TData>(control, input, converter));
-		}
+        public static void BindText<TData>(this BindingManager bindings, TextView control, Func<TData> output, Action<TData> input, IValueConverter<string, TData> converter)
+        {
+            bindings.Bind(
+                output, 
+                data => UpdateTextView<TData>(control, data, converter), 
+                new TextBinding<TData>(control, output, input, converter));
+        }
 
 		/// <summary>
 		/// Bind the text of a text view to a read-only property using a value converter.
@@ -96,7 +109,9 @@ namespace Assisticant.Binding
 		/// <typeparam name="TData">The type of the property.</typeparam>
 		public static void BindText<TData>(this BindingManager bindings, TextView control, Func<TData> output, IValueConverter<string, TData> converter)
 		{
-			bindings.Bind (output, s => control.Text = converter.ConvertOutput(s));
+            bindings.Bind(
+                output,
+                data => UpdateTextView<TData>(control, data, converter));
 		}
 
 		/// <summary>
@@ -108,7 +123,7 @@ namespace Assisticant.Binding
 		/// <param name="input">A function that sets the property.</param>
 		public static void BindText(this BindingManager bindings, TextView control, Func<string> output, Action<string> input)
 		{
-			BindText (bindings, control, output, input, Identity.Instance);
+			BindText(bindings, control, output, input, Identity.Instance);
 		}
 
 		/// <summary>
@@ -119,7 +134,7 @@ namespace Assisticant.Binding
 		/// <param name="output">A function that gets the property.</param>
 		public static void BindText(this BindingManager bindings, TextView control, Func<string> output)
 		{
-			BindText (bindings, control, output, Identity.Instance);
+			BindText(bindings, control, output, Identity.Instance);
 		}
 
 		/// <summary>
@@ -131,7 +146,7 @@ namespace Assisticant.Binding
 		/// <param name="input">A function that sets the property.</param>
 		public static void BindText(this BindingManager bindings, TextView control, Func<int> output, Action<int> input)
 		{
-			BindText (bindings, control, output, input, ConvertInt.Instance);
+			BindText(bindings, control, output, input, ConvertInt.Instance);
 		}
 
 		/// <summary>
@@ -142,8 +157,14 @@ namespace Assisticant.Binding
 		/// <param name="output">A function that gets the property.</param>
 		public static void BindText(this BindingManager bindings, TextView control, Func<int> output)
 		{
-			BindText (bindings, control, output, ConvertInt.Instance);
+			BindText(bindings, control, output, ConvertInt.Instance);
 		}
-	}
+
+        private static void UpdateTextView<TData>(TextView control, TData data, IValueConverter<string, TData> converter)
+        {
+            if (!control.HasFocus)
+                control.Text = converter.ConvertOutput(data);
+        }
+    }
 }
 
