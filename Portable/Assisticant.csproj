@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -55,7 +55,12 @@
     <Compile Include="Binding\IValueConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Binding\" />
-  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y $(TargetDir)$(TargetName).dll $(SolutionDir)NuGet\lib\MonoTouch\
+xcopy /y $(TargetDir)$(TargetName).xml $(SolutionDir)NuGet\lib\MonoTouch\
+xcopy /y $(TargetDir)$(TargetName).dll $(SolutionDir)NuGet\lib\MonoAndroid\
+xcopy /y $(TargetDir)$(TargetName).xml $(SolutionDir)NuGet\lib\MonoAndroid\
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

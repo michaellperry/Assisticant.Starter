@@ -53,4 +53,9 @@
       <Name>Assisticant</Name>
     </ProjectReference>
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y $(TargetDir)$(TargetName).dll $(SolutionDir)NuGet\lib\MonoTouch\
+xcopy /y $(TargetDir)$(TargetName).xml $(SolutionDir)NuGet\lib\MonoTouch\
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>
