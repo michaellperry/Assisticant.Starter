@@ -1,8 +1,5 @@
 using Android.App;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace Assisticant.Binding
@@ -15,6 +12,7 @@ namespace Assisticant.Binding
         /// <summary>
         /// Initialize the binding manager for an activity.
         /// </summary>
+        /// <param name="bindings">The binding manager for the activity.</param>
         /// <param name="activity">The activity that owns the binding manager.</param>
         public static void Initialize(this BindingManager bindings, Activity activity)
         {
