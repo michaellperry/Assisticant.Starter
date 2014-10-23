@@ -11,16 +11,78 @@ namespace Assisticant.Binding
     /// </summary>
     public static class ListViewExtensions
     {
-        class BindingArrayAdapter<T> : ArrayAdapter<T>
+        class ItemContainer<T> : IDisposable
+        {
+            private readonly T _item;
+            private readonly BindingArrayAdapter<T> _adapter;
+            private BindingManager _bindings;
+
+            public ItemContainer(T item, BindingArrayAdapter<T> adapter)
+            {
+                _item = item;
+                _adapter = adapter;
+            }
+
+            public T Item
+            {
+                get { return _item; }
+            }
+
+            public BindingManager Bindings
+            {
+                get { return _bindings; }
+            }
+
+            public void EnsureInCollection(int index)
+            {
+                if (_bindings == null)
+                {
+                    _adapter.Insert(this, index);
+                    _bindings = new BindingManager();
+                }
+                else if (_adapter.GetItem(index) != this)
+                {
+                    _adapter.Remove(this);
+                    _adapter.Insert(this, index);
+                }
+            }
+
+            public void Dispose()
+            {
+                if (_bindings != null)
+                {
+                    _bindings.Unbind();
+                    _adapter.Remove(this);
+                }
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (obj == this)
+                    return true;
+                var that = obj as ItemContainer<T>;
+                if (that == null)
+                    return false;
+                return Object.Equals(_item, that._item);
+            }
+
+            public override int GetHashCode()
+            {
+                return _item.GetHashCode();
+            }
+        }
+
+        class BindingArrayAdapter<T> : ArrayAdapter<ItemContainer<T>>, IInputSubscription
         {
             private int _resourceId;
             private Action<View, T, BindingManager> _bind;
+            private List<ItemContainer<T>> _itemContainers = new List<ItemContainer<T>>();
 
             public BindingArrayAdapter(
                 Context context, 
                 int resourceId, 
                 Action<View, T, BindingManager> bind)
-                : base(context, resourceId, new List<T>())
+                : base(context, resourceId, new List<ItemContainer<T>>())
             {
                 _resourceId = resourceId;
                 _bind = bind;
@@ -31,16 +93,42 @@ namespace Assisticant.Binding
                 var inflater = (LayoutInflater)Context.GetSystemService(
                     Context.LayoutInflaterService);
                 var row = inflater.Inflate(_resourceId, parent, attachToRoot: false);
-                var bindings = new BindingManager();
-                _bind(row, GetItem(position), bindings);
+                var itemContainer = GetItem(position);
+                itemContainer.Bindings.Unbind();
+                _bind(row, itemContainer.Item, itemContainer.Bindings);
                 return row;
             }
 
             public void UpdateItems(IEnumerable<T> items)
             {
-                Clear();
-                foreach (var item in items)
-                    Add(item);
+                using (var bin = new RecycleBin<ItemContainer<T>>(_itemContainers))
+                {
+                    _itemContainers.Clear();
+                    foreach (var item in items)
+                    {
+                        var itemContainer = bin.Extract(new ItemContainer<T>(item, this));
+                        _itemContainers.Add(itemContainer);
+                    }
+                }
+
+                int index = 0;
+                foreach (var itemContainer in _itemContainers)
+                {
+                    itemContainer.EnsureInCollection(index);
+                    index++;
+                }
+            }
+
+            public void Subscribe()
+            {
+            }
+
+            public void Unsubscribe()
+            {
+                foreach (var itemContainer in _itemContainers)
+                {
+                    itemContainer.Bindings.Unbind();
+                }
             }
         }
 
@@ -62,7 +150,7 @@ namespace Assisticant.Binding
         {
             var adapter = new BindingArrayAdapter<T>(control.Context, layoutId, bind);
             control.Adapter = adapter;
-            bindings.Bind(output, items => adapter.UpdateItems(items));
+            bindings.Bind(output, items => adapter.UpdateItems(items), adapter);
         }
     }
 }
