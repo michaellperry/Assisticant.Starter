@@ -34,6 +34,8 @@ namespace Assisticant.Binding
                 get { return _bindings; }
             }
 
+            public View View { get; set; }
+
             public void EnsureInCollection(int index)
             {
                 if (_bindings == null)
@@ -91,12 +93,18 @@ namespace Assisticant.Binding
 
             public override View GetView(int position, View convertView, ViewGroup parent)
             {
+                var itemContainer = GetItem(position);
+                if (itemContainer.View != null)
+                    return itemContainer.View;
+
                 var inflater = (LayoutInflater)Context.GetSystemService(
                     Context.LayoutInflaterService);
                 var row = inflater.Inflate(_resourceId, parent, attachToRoot: false);
-                var itemContainer = GetItem(position);
-                itemContainer.Bindings.Unbind();
+                var scheduler = UpdateScheduler.Begin();
                 _bind(row, itemContainer.Item, itemContainer.Bindings);
+                foreach (var update in scheduler.End())
+                    update();
+                itemContainer.View = row;
                 return row;
             }
 

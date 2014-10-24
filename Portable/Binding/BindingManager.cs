@@ -80,6 +80,7 @@ namespace Assisticant.Binding
 				if (subscription.Input != null)
 					subscription.Input.Unsubscribe ();
 			}
+            _subscriptions.Clear();
 		}
 	}
 }
