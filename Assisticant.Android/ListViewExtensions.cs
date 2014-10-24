@@ -3,6 +3,7 @@ using Android.Views;
 using Android.Widget;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assisticant.Binding
 {
@@ -150,7 +151,7 @@ namespace Assisticant.Binding
         {
             var adapter = new BindingArrayAdapter<T>(control.Context, layoutId, bind);
             control.Adapter = adapter;
-            bindings.Bind(output, items => adapter.UpdateItems(items), adapter);
+            bindings.Bind(() => output().ToList(), items => adapter.UpdateItems(items), adapter);
         }
     }
 }
