@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Assisticant.Starter</id>
+    <version>1.0.7</version>
+    <authors>Michael L Perry</authors>
+    <owners>Michael L Perry</owners>
+    <licenseUrl>http://assisticant.net/license</licenseUrl>
+    <projectUrl>http://assisticant.net/</projectUrl>
+    <iconUrl>http://assisticant.net/images/logosmall.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Data binding in Xamarin for iOS and Android that fits within the starter licence.</description>
+    <language>en-US</language>
+    <tags>mvvm viewmodel databinding ios android</tags>
+  </metadata>
+</package>
