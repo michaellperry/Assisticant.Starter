@@ -43,10 +43,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextBindingExtensions.cs" />
     <Compile Include="BindingManagerExtensions.cs" />
-    <Compile Include="TableBindingExtensions.cs" />
     <Compile Include="ButtonBindingExtensions.cs" />
     <Compile Include="StepperBindingExtensions.cs" />
-    <Compile Include="CollectionViewBindingExtensions.cs" />
+    <Compile Include="TableViewBindingExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
