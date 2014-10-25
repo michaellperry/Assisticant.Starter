@@ -10,7 +10,7 @@ namespace Assisticant.Binding
     /// <summary>
     /// ListViewExtensions
     /// </summary>
-    public static class ListViewExtensions
+    public static class ListViewBindingExtensions
     {
         class ItemContainer<T> : IDisposable
         {
