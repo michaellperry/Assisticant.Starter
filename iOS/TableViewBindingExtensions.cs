@@ -69,7 +69,11 @@ namespace Assisticant.Binding
 				if (cell == null)
 					cell = new UITableViewCell (UITableViewCellStyle.Default, "TableCell");
 
+                var scheduler = UpdateScheduler.Begin();
 				_bind(cell, itemContainer.Item, itemContainer.Bindings);
+                foreach (var update in scheduler.End())
+                    update();
+
 				return cell;
 			}
 
