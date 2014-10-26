@@ -6,6 +6,10 @@ Pared down version of Assisticant that can be used with Xamarin Starter Edition.
 Data bind iOS and Android views to view models using dependency tracking. Create ViewControllers and Activities
 just like you are used to, write simple view model classes, and set up two-way data binding.
 
+```
+    PM> Install-Package Assisticant.Starter
+```
+
 ## Observable
 
 Declare all of your model fields using the Observable<T> class. Initialize the field, optionally initialize the value
