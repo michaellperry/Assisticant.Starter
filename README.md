@@ -174,3 +174,127 @@ In iOS, call the BindingManager's Unbind method in ViewDidDisappear. In Android,
         base.OnDestroy();
     }
 ```
+
+## ObservableList
+
+In your model, define lists using the ObservableList<T> class. This has the same contract
+as a List<T>, but it participates in data binding. Access the list through methods and
+properties.
+
+```c#
+public class AddressBook
+{
+    private ObservableList<Person> _people = new ObservableList<Person>();
+
+    public IEnumerable<Person> People
+    {
+        get { return _people; }
+    }
+
+    public Person NewPerson()
+    {
+        var person = new Person();
+        _people.Add(person);
+        return person;
+    }
+}
+```
+
+## View model collections
+
+You could return a collection of model objects from the view model. But if you do, then
+you will not have an opportunity to add view-specific properties to those objects. So I
+recommend returning child view models instead.
+
+Use Linq to project model objects into new view model objects.
+
+```c#
+public class AddressBookViewModel
+{
+    private readonly AddressBook _addressBook;
+
+    public AddressBookViewModel(AddressBook addressBook)
+    {
+        _addressBook = addressBook;
+    }
+
+    public IEnumerable<PersonViewModel> People
+    {
+        get
+        {
+            return
+                from person in _addressBook.People
+                select new PersonViewModel(person);
+        }
+    }
+}
+```
+
+## Child view model comparison
+
+When you define child view models, it's a good idea to define Equals and GetHashCode. This
+helps Assisticant keep the items in the view consistent with the child objects.
+
+```c#
+public class PersonViewModel
+{
+    private readonly Person _person;
+
+    public PersonViewModel(Person person)
+    {
+        _person = person;            
+    }
+
+    public string Name
+    {
+        get { return _person.LastName + ", " + _person.FirstName; }
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+        {
+            return false;
+        }
+
+        return _person == ((PersonViewModel)obj)._person;
+    }
+
+    public override int GetHashCode()
+    {
+        return _person.GetHashCode();
+    }
+}
+```
+
+## BindItems
+
+To bind child view models to an Android ListView or an iOS UITableView, use the BindItems
+method. In Android, pass in the identifier of the child layout, and a function that binds
+each child.
+
+```c#
+    _bindings.BindItems(FindViewById<ListView>(Resource.Id.listPeople),
+        () => _viewModel.People,
+        Resource.Layout.Name,
+        (view, person, bindings) =>
+        {
+            bindings.BindText(view.FindViewById<TextView>(Resource.Id.textName),
+                () => person.Name);
+        });
+```
+
+In iOS, pass in a function that binds each child to a UITableViewCell.
+
+```c#
+    _bindings.BindItems(listPeople,
+        () => _viewModel.People,
+        (cell, person, bindings) =>
+        {
+            bindings.BindText(cell.TextLabel,
+                () => person.Name);
+        });
+```
+
+The child bindings will be cleaned up when the item is removed from the list, or when
+you call Unbind on the parent binding. There is no additional work for you to do.

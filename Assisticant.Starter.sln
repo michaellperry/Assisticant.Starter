@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{18F1A851-997C-4C06-937F-48880C158475}"
 	ProjectSection(SolutionItems) = preProject
 		NuGet\assisticant.starter.nuspec = NuGet\assisticant.starter.nuspec
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
