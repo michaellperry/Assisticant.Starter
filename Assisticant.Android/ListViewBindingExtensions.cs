@@ -101,9 +101,18 @@ namespace Assisticant.Binding
                     Context.LayoutInflaterService);
                 var row = inflater.Inflate(_resourceId, parent, attachToRoot: false);
                 var scheduler = UpdateScheduler.Begin();
-                _bind(row, itemContainer.Item, itemContainer.Bindings);
-                foreach (var update in scheduler.End())
-                    update();
+                try
+                {
+                    _bind(row, itemContainer.Item, itemContainer.Bindings);
+                }
+                finally
+                {
+                    if (scheduler != null)
+                    {
+                        foreach (var update in scheduler.End())
+                            update();
+                    }
+                }
                 itemContainer.View = row;
                 return row;
             }

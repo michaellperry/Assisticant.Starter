@@ -16,6 +16,8 @@ namespace Assisticant.Binding
             private Func<TData> _output;
 			private Action<TData> _input;
 			private IValueConverter<string, TData> _converter;
+            private int _inputCount = 0;
+            private int _outputCount = 0;
 
 			public TextBinding(TextView control, Func<TData> output, Action<TData> input, IValueConverter<string, TData> converter)
 			{
@@ -25,7 +27,24 @@ namespace Assisticant.Binding
 				_converter = converter;
 			}
 
-			public void Subscribe()
+            public void UpdateTextView(TData data)
+            {
+                if (_inputCount > 0)
+                    return;
+
+                string text = _converter.ConvertOutput(_output());
+                _outputCount++;
+                try
+                {
+                    _control.Text = text;
+                }
+                finally
+                {
+                    _outputCount--;
+                }
+            }
+
+            public void Subscribe()
 			{
 				_control.TextChanged += TextViewTextChanged;
                 _control.FocusChange += TextViewFocusChanged;
@@ -39,7 +58,30 @@ namespace Assisticant.Binding
 
 			private void TextViewTextChanged (object sender, EventArgs e)
 			{
-				_input(_converter.ConvertInput(_control.Text));
+                if (_outputCount > 0)
+                    return;
+
+                var updateScheduler = UpdateScheduler.Begin();
+                try
+                {
+                    _input(_converter.ConvertInput(_control.Text));
+                }
+                finally
+                {
+                    if (updateScheduler != null)
+                    {
+                        _inputCount++;
+                        try
+                        {
+                            foreach (var update in updateScheduler.End())
+                                update();
+                        }
+                        finally
+                        {
+                            _inputCount--;
+                        }
+                    }
+                }
 			}
 
             private void TextViewFocusChanged(object sender, View.FocusChangeEventArgs e)
@@ -93,10 +135,11 @@ namespace Assisticant.Binding
 		/// <typeparam name="TData">The type of the property.</typeparam>
         public static void BindText<TData>(this BindingManager bindings, TextView control, Func<TData> output, Action<TData> input, IValueConverter<string, TData> converter)
         {
+            var textBinding = new TextBinding<TData>(control, output, input, converter);
             bindings.Bind(
-                output, 
-                data => UpdateTextView<TData>(control, data, converter), 
-                new TextBinding<TData>(control, output, input, converter));
+                output,
+                data => textBinding.UpdateTextView(data),
+                textBinding);
         }
 
 		/// <summary>
@@ -111,7 +154,7 @@ namespace Assisticant.Binding
 		{
             bindings.Bind(
                 output,
-                data => UpdateTextView<TData>(control, data, converter));
+                data => control.Text = converter.ConvertOutput(data));
 		}
 
 		/// <summary>
@@ -159,12 +202,6 @@ namespace Assisticant.Binding
 		{
 			BindText(bindings, control, output, ConvertInt.Instance);
 		}
-
-        private static void UpdateTextView<TData>(TextView control, TData data, IValueConverter<string, TData> converter)
-        {
-            if (!control.HasFocus)
-                control.Text = converter.ConvertOutput(data);
-        }
     }
 }
 
