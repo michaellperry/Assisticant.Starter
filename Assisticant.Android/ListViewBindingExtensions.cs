@@ -148,11 +148,15 @@ namespace Assisticant.Binding
             public void Subscribe()
             {
                 _control.ItemSelected += ListView_ItemSelected;
+                _control.ItemClick += ListView_ItemClick;
+                _control.NothingSelected += ListView_NothingSelected;
             }
 
             public void Unsubscribe()
             {
                 _control.ItemSelected -= ListView_ItemSelected;
+                _control.ItemClick -= ListView_ItemClick;
+                _control.NothingSelected -= ListView_NothingSelected;
                 foreach (var itemContainer in _itemContainers)
                 {
                     itemContainer.Bindings.Unbind();
@@ -162,6 +166,16 @@ namespace Assisticant.Binding
             void ListView_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
             {
                 _selected(_itemContainers[e.Position].Item);
+            }
+
+            void ListView_ItemClick (object sender, AdapterView.ItemClickEventArgs e)
+            {
+                _selected (_itemContainers [e.Position].Item);
+            }
+
+            void ListView_NothingSelected (object sender, AdapterView.NothingSelectedEventArgs e)
+            {
+                _selected (default(T));
             }
         }
 
