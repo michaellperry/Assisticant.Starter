@@ -77,17 +77,25 @@ namespace Assisticant.Binding
 
         class BindingArrayAdapter<T> : ArrayAdapter<ItemContainer<T>>, IInputSubscription
         {
-            private int _resourceId;
-            private Action<View, T, BindingManager> _bind;
+            private readonly ListView _control;
+            private readonly int _resourceId;
+            private readonly Func<T> _selection;
+            private readonly Action<T> _selected;
+            private readonly Action<View, T, BindingManager> _bind;
             private List<ItemContainer<T>> _itemContainers = new List<ItemContainer<T>>();
-
+            
             public BindingArrayAdapter(
-                Context context, 
-                int resourceId, 
+                ListView control, 
+                int resourceId,
+                Func<T> selection,
+                Action<T> selected,
                 Action<View, T, BindingManager> bind)
-                : base(context, resourceId, new List<ItemContainer<T>>())
+                : base(control.Context, resourceId, new List<ItemContainer<T>>())
             {
+                _control = control;
                 _resourceId = resourceId;
+                _selection = selection;
+                _selected = selected;
                 _bind = bind;
             }
 
@@ -139,14 +147,21 @@ namespace Assisticant.Binding
 
             public void Subscribe()
             {
+                _control.ItemSelected += ListView_ItemSelected;
             }
 
             public void Unsubscribe()
             {
+                _control.ItemSelected -= ListView_ItemSelected;
                 foreach (var itemContainer in _itemContainers)
                 {
                     itemContainer.Bindings.Unbind();
                 }
+            }
+
+            void ListView_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+            {
+                _selected(_itemContainers[e.Position].Item);
             }
         }
 
@@ -166,7 +181,30 @@ namespace Assisticant.Binding
             int layoutId,
             Action<View, T, BindingManager> bind)
         {
-            var adapter = new BindingArrayAdapter<T>(control.Context, layoutId, bind);
+            BindItems(bindings, control, output, layoutId, () => default(T), _ => { }, bind);
+        }
+
+        /// <summary>
+        /// Bind the items of a ListView to a collection.
+        /// </summary>
+        /// <typeparam name="T">The type of item in the collection.</typeparam>
+        /// <param name="bindings">The binding manager.</param>
+        /// <param name="control">The ListView to bind.</param>
+        /// <param name="output">The collection to which to bind.</param>
+        /// <param name="layoutId">The ID of the layout resource to use for the items of the ListView.</param>
+        /// <param name="selection">Get the current selection.</param>
+        /// <param name="selected">Set the current selection.</param>
+        /// <param name="bind">The delegate that binds each item of the collection.</param>
+        public static void BindItems<T>(
+            this BindingManager bindings,
+            ListView control,
+            Func<IEnumerable<T>> output,
+            int layoutId,
+            Func<T> selection,
+            Action<T> selected,
+            Action<View, T, BindingManager> bind)
+        {
+            var adapter = new BindingArrayAdapter<T>(control, layoutId, selection, selected, bind);
             control.Adapter = adapter;
             bindings.Bind(() => output().ToList(), items => adapter.UpdateItems(items), adapter);
         }
