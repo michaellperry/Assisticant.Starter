@@ -90,8 +90,6 @@ namespace Assisticant.Binding
             {
                 var itemContainer = _itemContainers[indexPath.Row];
                 _selected(itemContainer.Item);
-
-                base.RowSelected(tableView, indexPath);
             }
 
             public void Subscribe ()
