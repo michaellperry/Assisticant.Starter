@@ -82,14 +82,20 @@ namespace Assisticant.Binding
 
             public override void CellDisplayingEnded(UITableView tableView, UITableViewCell cell, NSIndexPath indexPath)
             {
-                var itemContainer = _itemContainers[indexPath.Row];
-                itemContainer.Bindings.Unbind();
+				if (_itemContainers.Count > indexPath.Row)
+				{
+					var itemContainer = _itemContainers[indexPath.Row];
+					itemContainer.Bindings.Unbind();
+				}
             }
 
             public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
             {
-                var itemContainer = _itemContainers[indexPath.Row];
-                _selected(itemContainer.Item);
+				if (_itemContainers.Count > indexPath.Row)
+				{
+					var itemContainer = _itemContainers[indexPath.Row];
+					_selected(itemContainer.Item);
+				}
             }
 
             public void Subscribe ()
