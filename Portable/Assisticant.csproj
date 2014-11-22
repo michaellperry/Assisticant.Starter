@@ -10,6 +10,7 @@
     <AssemblyName>Assisticant</AssemblyName>
     <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,6 +63,8 @@
 xcopy /y $(TargetDir)$(TargetName).xml $(SolutionDir)NuGet\lib\MonoTouch\
 xcopy /y $(TargetDir)$(TargetName).dll $(SolutionDir)NuGet\lib\MonoAndroid\
 xcopy /y $(TargetDir)$(TargetName).xml $(SolutionDir)NuGet\lib\MonoAndroid\
+xcopy /y $(TargetDir)$(TargetName).dll $(SolutionDir)NuGet\lib\portable-net45+win+wp80+MonoAndroid10+xamarinios10+MonoTouch10\
+xcopy /y $(TargetDir)$(TargetName).xml $(SolutionDir)NuGet\lib\portable-net45+win+wp80+MonoAndroid10+xamarinios10+MonoTouch10\
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
