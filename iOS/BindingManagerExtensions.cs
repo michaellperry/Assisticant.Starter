@@ -1,6 +1,6 @@
 ﻿using System;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+using UIKit;
+using Foundation;
 
 namespace Assisticant.Binding
 {
@@ -17,7 +17,7 @@ namespace Assisticant.Binding
 		public static void Initialize (this BindingManager bindings, UIViewController controller)
 		{
 			UpdateScheduler.Initialize (a =>
-				controller.BeginInvokeOnMainThread (new NSAction(a)));
+				controller.BeginInvokeOnMainThread (new Action(a)));
 		}
 	}
 }

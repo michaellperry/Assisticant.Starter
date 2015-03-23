@@ -1,8 +1,8 @@
 ﻿using System;
-using MonoTouch.UIKit;
+using UIKit;
 using System.Collections.Generic;
 using System.Linq;
-using MonoTouch.Foundation;
+using Foundation;
 
 namespace Assisticant.Binding
 {
@@ -57,7 +57,7 @@ namespace Assisticant.Binding
                 _tableView.ReloadData();
             }
 
-            public override int RowsInSection(UITableView tableview, int section)
+            public override nint RowsInSection(UITableView tableview, nint section)
             {
                 return _itemContainers.Count;
             }

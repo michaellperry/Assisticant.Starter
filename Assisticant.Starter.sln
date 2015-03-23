@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assisticant", "Portable\Assisticant.csproj", "{8B6EB900-35B0-41DA-A8DF-72E2752942A3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assisticant.iOS", "iOS\Assisticant.iOS.csproj", "{45977155-1C67-4865-BFD0-CD3A26543B5B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assisticant.Android", "Assisticant.Android\Assisticant.Android.csproj", "{F68ADB8D-0AC6-43A2-BA33-9C1C1CDEDC0D}"
 EndProject
@@ -14,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		NuGet\assisticant.starter.nuspec = NuGet\assisticant.starter.nuspec
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assisticant.iOS", "iOS\Assisticant.iOS.csproj", "{AD03FB2E-D683-4A87-8162-B9E5B491AB2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,14 @@ Global
 		{8B6EB900-35B0-41DA-A8DF-72E2752942A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B6EB900-35B0-41DA-A8DF-72E2752942A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B6EB900-35B0-41DA-A8DF-72E2752942A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45977155-1C67-4865-BFD0-CD3A26543B5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45977155-1C67-4865-BFD0-CD3A26543B5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45977155-1C67-4865-BFD0-CD3A26543B5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45977155-1C67-4865-BFD0-CD3A26543B5B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F68ADB8D-0AC6-43A2-BA33-9C1C1CDEDC0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F68ADB8D-0AC6-43A2-BA33-9C1C1CDEDC0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F68ADB8D-0AC6-43A2-BA33-9C1C1CDEDC0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F68ADB8D-0AC6-43A2-BA33-9C1C1CDEDC0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD03FB2E-D683-4A87-8162-B9E5B491AB2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD03FB2E-D683-4A87-8162-B9E5B491AB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD03FB2E-D683-4A87-8162-B9E5B491AB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD03FB2E-D683-4A87-8162-B9E5B491AB2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
