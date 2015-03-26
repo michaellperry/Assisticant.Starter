@@ -74,8 +74,7 @@ public class MyViewModel
 
 ## BindingManager
 
-In iOS, create a ViewController. In Android, create an Activity. Create a private field of type BindingManager. Also create
-a field to hold your view model.
+In iOS, create a `ViewController`. Create a private field of type `BindingManager`. Also create a field to hold your view model.
 
 ```c#
 using Assisticant.Binding;
@@ -86,6 +85,8 @@ public class MyViewController : ViewController
     private MyViewModel _viewModel = new MyViewModel(new MyModel());
 }
 ```
+
+In Android, create an `Activity`. Create a private field of type `BindingManager`. Also create a field to hold your view model.
 
 ```c#
 using Assisticant.Binding;
@@ -99,9 +100,7 @@ public class MyActivity : Activity
 
 ## Initialize
 
-In iOS, call the BindingManager's Initialize method in ViewDidLoad. Pass in the ViewController (this).
-
-In Android, call the BindingManager's Initialize method in OnCreate. Pass in the Activity (this).
+In iOS, call the BindingManager's Initialize method in `ViewDidLoad`. Pass in the ViewController (this).
 
 ```c#
     protected override void ViewDidLoad()
@@ -111,6 +110,8 @@ In Android, call the BindingManager's Initialize method in OnCreate. Pass in the
         _bindings.Initialize(this);
     }
 ```
+
+In Android, call the BindingManager's Initialize method in `OnCreate`. Pass in the Activity (this).
 
 ```c#
     protected override void OnCreate()
@@ -126,9 +127,6 @@ In Android, call the BindingManager's Initialize method in OnCreate. Pass in the
 In iOS, call the BindingManager's Bind methods in ViewWillAppear. Pass in the UI control to bind, a lambda expression
 for output, and optionally a second lambda expression for input.
 
-In Android, call the BindingManager's Bind methods in OnCreate, after the call to Initialize. Find the view to bind by
-ID, and pass it into bind. Also pass in a lambda expression for output, and optionally a second lambda expression for input.
-
 ```c#
     protected override void ViewWillAppear()
     {
@@ -141,6 +139,9 @@ ID, and pass it into bind. Also pass in a lambda expression for output, and opti
             s => _viewModel.Description = s);
     }
 ```
+
+In Android, call the BindingManager's Bind methods in OnCreate, after the call to Initialize. Find the view to bind by
+ID, and pass it into bind. Also pass in a lambda expression for output, and optionally a second lambda expression for input.
 
 ```c#
     protected override void OnCreate()
@@ -159,7 +160,7 @@ ID, and pass it into bind. Also pass in a lambda expression for output, and opti
 
 ## Unbind
 
-In iOS, call the BindingManager's Unbind method in ViewDidDisappear. In Android, call it in OnDestroy.
+In iOS, call the BindingManager's Unbind method in `ViewDidDisappear`.
 
 ```c#
     protected override void ViewDidDisappear()
@@ -169,6 +170,8 @@ In iOS, call the BindingManager's Unbind method in ViewDidDisappear. In Android,
         base.ViewDidDisappear();
     }
 ```
+
+In Android, call the BindingManager's Unbind method in `OnDestroy`.
 
 ```c#
     protected override void OnDestroy()
