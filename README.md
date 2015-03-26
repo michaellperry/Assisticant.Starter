@@ -280,20 +280,8 @@ public class PersonViewModel
 
 ## BindItems
 
-To bind child view models to an Android `ListView` or an iOS `UITableView`, use the `BindItems`
-method. In Android, pass in the identifier of the child layout, and a function that binds
-each child.
-
-```c#
-    _bindings.BindItems(FindViewById<ListView>(Resource.Id.listPeople),
-        () => _viewModel.People,
-        Resource.Layout.Name,
-        (view, person, bindings) =>
-        {
-            bindings.BindText(view.FindViewById<TextView>(Resource.Id.textName),
-                () => person.Name);
-        });
-```
+To bind child view models to an iOS `UITableView` or an Android `ListView`, use the `BindItems`
+method.
 
 In iOS, pass in a function that binds each child to a `UITableViewCell`.
 
@@ -303,6 +291,20 @@ In iOS, pass in a function that binds each child to a `UITableViewCell`.
         (cell, person, bindings) =>
         {
             bindings.BindText(cell.TextLabel,
+                () => person.Name);
+        });
+```
+
+In Android, pass in the identifier of the child layout, and a function that binds
+each child.
+
+```c#
+    _bindings.BindItems(FindViewById<ListView>(Resource.Id.listPeople),
+        () => _viewModel.People,
+        Resource.Layout.Name,
+        (view, person, bindings) =>
+        {
+            bindings.BindText(view.FindViewById<TextView>(Resource.Id.textName),
                 () => person.Name);
         });
 ```
