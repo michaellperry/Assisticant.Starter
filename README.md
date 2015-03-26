@@ -12,7 +12,7 @@ just like you are used to, write simple view model classes, and set up two-way d
 
 ## Observable
 
-Declare all of your model fields using the Observable<T> class. Initialize the field, optionally initialize the value
+Declare all of your model fields using the `Observable<T>` class. Initialize the field, optionally initialize the value
 by passing it into the constructor. Write properties to access the observable fields.
 
 ```c#
@@ -124,7 +124,7 @@ In Android, call the BindingManager's Initialize method in `OnCreate`. Pass in t
 
 ## Bind
 
-In iOS, call the BindingManager's Bind methods in ViewWillAppear. Pass in the UI control to bind, a lambda expression
+In iOS, call the BindingManager's Bind methods in `ViewWillAppear`. Pass in the UI control to bind, a lambda expression
 for output, and optionally a second lambda expression for input.
 
 ```c#
@@ -132,8 +132,10 @@ for output, and optionally a second lambda expression for input.
     {
         base.ViewWillAppear();
 
+        // One way data bind
         _bindings.BindText(nameLabel,
             () => _viewModel.Name);
+        // Two way data bind
         _bindings.BindText(descriptionEdit,
             () => _viewModel.Description,
             s => _viewModel.Description = s);
@@ -150,8 +152,10 @@ ID, and pass it into bind. Also pass in a lambda expression for output, and opti
 
         _bindings.Initialize(this);
         
+        // One way data bind
         _bindings.BindText(FindViewById<TextView>(Resources.Id.NameLabel),
             () => _viewModel.Name);
+        // Two way data bind
         _bindings.BindText(FindViewById<EditText>(Resources.Id.DescriptionEdit),
             () => _viewModel.Description,
             s => _viewModel.Description = s);
@@ -184,8 +188,8 @@ In Android, call the BindingManager's Unbind method in `OnDestroy`.
 
 ## ObservableList
 
-In your model, define lists using the ObservableList<T> class. This has the same contract
-as a List<T>, but it participates in data binding. Access the list through methods and
+In your model, define lists using the `ObservableList<T>` class. This has the same contract
+as a `List<T>`, but it participates in data binding. Access the list through methods and
 properties.
 
 ```c#
@@ -239,7 +243,7 @@ public class AddressBookViewModel
 
 ## Child view model comparison
 
-When you define child view models, it's a good idea to define Equals and GetHashCode. This
+When you define child view models, it's a good idea to define `Equals` and `GetHashCode`. This
 helps Assisticant keep the items in the view consistent with the child objects.
 
 ```c#
@@ -276,7 +280,7 @@ public class PersonViewModel
 
 ## BindItems
 
-To bind child view models to an Android ListView or an iOS UITableView, use the BindItems
+To bind child view models to an Android `ListView` or an iOS `UITableView`, use the `BindItems`
 method. In Android, pass in the identifier of the child layout, and a function that binds
 each child.
 
@@ -291,7 +295,7 @@ each child.
         });
 ```
 
-In iOS, pass in a function that binds each child to a UITableViewCell.
+In iOS, pass in a function that binds each child to a `UITableViewCell`.
 
 ```c#
     _bindings.BindItems(listPeople,
