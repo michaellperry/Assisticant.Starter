@@ -2,3 +2,4 @@ bin/
 obj/
 Assisticant.Starter.v12.suo
 NuGet/
+*.userprefs

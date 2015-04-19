@@ -59,12 +59,7 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y $(TargetDir)$(TargetName).dll $(SolutionDir)NuGet\lib\Xamarin.iOS10\
-xcopy /y $(TargetDir)$(TargetName).xml $(SolutionDir)NuGet\lib\Xamarin.iOS10\
-xcopy /y $(TargetDir)$(TargetName).dll $(SolutionDir)NuGet\lib\MonoAndroid\
-xcopy /y $(TargetDir)$(TargetName).xml $(SolutionDir)NuGet\lib\MonoAndroid\
-xcopy /y $(TargetDir)$(TargetName).dll $(SolutionDir)NuGet\lib\portable-net45+win+wp80+MonoAndroid10+Xamarin.iOS10\
-xcopy /y $(TargetDir)$(TargetName).xml $(SolutionDir)NuGet\lib\portable-net45+win+wp80+MonoAndroid10+Xamarin.iOS10\
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

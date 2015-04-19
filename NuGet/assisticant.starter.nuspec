@@ -13,4 +13,16 @@
     <language>en-US</language>
     <tags>mvvm viewmodel databinding ios android</tags>
   </metadata>
+  <files>
+    <file src="..\Portable\bin\Release\Assisticant.dll" target="lib\portable-net45+win+wp80+MonoAndroid10+Xamarin.iOS10" />
+    <file src="..\Portable\bin\Release\Assisticant.xml" target="lib\portable-net45+win+wp80+MonoAndroid10+Xamarin.iOS10" />
+    <file src="..\Portable\bin\Release\Assisticant.dll" target="lib\Xamarin.iOS10" />
+    <file src="..\Portable\bin\Release\Assisticant.xml" target="lib\Xamarin.iOS10" />
+    <file src="..\Portable\bin\Release\Assisticant.dll" target="lib\MonoAndroid10" />
+    <file src="..\Portable\bin\Release\Assisticant.xml" target="lib\MonoAndroid10" />
+    <file src="..\iOS\bin\iPhone\Release\Assisticant.iOS.dll" target="lib\Xamarin.iOS10" />
+    <file src="..\iOS\bin\iPhone\Release\Assisticant.iOS.xml" target="lib\Xamarin.iOS10" />
+    <file src="..\Assisticant.Android\bin\Release\Assisticant.Android.dll" target="lib\MonoAndroid10" />
+    <file src="..\Assisticant.Android\bin\Release\Assisticant.Android.xml" target="lib\MonoAndroid10" />
+  </files>
 </package>
