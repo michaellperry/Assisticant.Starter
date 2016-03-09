@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Assisticant.Starter</id>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <authors>Michael L Perry</authors>
     <owners>Michael L Perry</owners>
     <licenseUrl>http://assisticant.net/license</licenseUrl>
@@ -14,15 +14,15 @@
     <tags>mvvm viewmodel databinding ios android</tags>
   </metadata>
   <files>
-    <file src="..\Portable\bin\Release\Assisticant.dll" target="lib\portable-net45+win+wp80+MonoAndroid10+Xamarin.iOS10" />
-    <file src="..\Portable\bin\Release\Assisticant.xml" target="lib\portable-net45+win+wp80+MonoAndroid10+Xamarin.iOS10" />
+    <file src="..\Portable\bin\Release\Assisticant.dll" target="lib\portable-net45+netcore45+wpa81" />
+    <file src="..\Portable\bin\Release\Assisticant.xml" target="lib\portable-net45+netcore45+wpa81" />
     <file src="..\Portable\bin\Release\Assisticant.dll" target="lib\Xamarin.iOS10" />
     <file src="..\Portable\bin\Release\Assisticant.xml" target="lib\Xamarin.iOS10" />
-    <file src="..\Portable\bin\Release\Assisticant.dll" target="lib\MonoAndroid10" />
-    <file src="..\Portable\bin\Release\Assisticant.xml" target="lib\MonoAndroid10" />
+    <file src="..\Portable\bin\Release\Assisticant.dll" target="lib\MonoAndroid403" />
+    <file src="..\Portable\bin\Release\Assisticant.xml" target="lib\MonoAndroid403" />
     <file src="..\iOS\bin\iPhone\Release\Assisticant.iOS.dll" target="lib\Xamarin.iOS10" />
     <file src="..\iOS\bin\iPhone\Release\Assisticant.iOS.xml" target="lib\Xamarin.iOS10" />
-    <file src="..\Assisticant.Android\bin\Release\Assisticant.Android.dll" target="lib\MonoAndroid10" />
-    <file src="..\Assisticant.Android\bin\Release\Assisticant.Android.xml" target="lib\MonoAndroid10" />
+    <file src="..\Assisticant.Android\bin\Release\Assisticant.Android.dll" target="lib\MonoAndroid403" />
+    <file src="..\Assisticant.Android\bin\Release\Assisticant.Android.xml" target="lib\MonoAndroid403" />
   </files>
 </package>
