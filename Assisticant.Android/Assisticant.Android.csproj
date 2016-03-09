@@ -50,15 +50,8 @@
     <Compile Include="ButtonBindingExtensions.cs" />
     <Compile Include="ListViewBindingExtensions.cs" />
     <Compile Include="NumberPickerBindingExtensions.cs" />
-    <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextBindingExtensions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\AboutResources.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Portable\Assisticant.csproj">
