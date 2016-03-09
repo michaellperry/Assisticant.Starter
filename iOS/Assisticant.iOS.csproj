@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{AD03FB2E-D683-4A87-8162-B9E5B491AB2B}</ProjectGuid>
+    <ProjectGuid>{89B554EB-2886-475F-9672-F90FAE10C4F2}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Assisticant</RootNamespace>
+    <RootNamespace>Assisticant.Binding</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>Assisticant.iOS</AssemblyName>
   </PropertyGroup>
@@ -23,6 +23,8 @@
     <ConsolePause>false</ConsolePause>
     <MtouchDebug>true</MtouchDebug>
     <CodesignKey>iPhone Developer</CodesignKey>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -44,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Portable\Assisticant.csproj">
-      <Project>{8b6eb900-35b0-41da-a8df-72e2752942a3}</Project>
+      <Project>{091aa2d7-9971-4320-8a9e-cdeee7d22eb2}</Project>
       <Name>Assisticant</Name>
     </ProjectReference>
   </ItemGroup>
@@ -55,8 +57,4 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
 </Project>
